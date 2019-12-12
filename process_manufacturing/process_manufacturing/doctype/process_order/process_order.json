@@ -12,6 +12,10 @@
   "department",
   "process_type",
   "process_name",
+  "material_ratio",
+  "blank",
+  "bottom",
+  "scrap_ratio",
   "column_break_5",
   "status",
   "workstation",
@@ -25,6 +29,8 @@
   "scrap_warehouse",
   "sb_materials",
   "materials",
+  "packing_details_section",
+  "process_order_packing",
   "sb_finished_products",
   "finished_products",
   "sb_scrap",
@@ -223,10 +229,48 @@
    "fieldtype": "Link",
    "label": "Employee",
    "options": "Employee"
+  },
+  {
+   "fieldname": "material_ratio",
+   "fieldtype": "Link",
+   "label": "Material Ratio",
+   "options": "Material Ratio"
+  },
+  {
+   "fetch_from": "material_ratio.blank",
+   "fieldname": "blank",
+   "fieldtype": "Float",
+   "label": "Blank",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "material_ratio.bottom",
+   "fieldname": "bottom",
+   "fieldtype": "Float",
+   "label": "Bottom",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "material_ratio.scrap",
+   "fieldname": "scrap_ratio",
+   "fieldtype": "Float",
+   "label": "Scrap Ratio",
+   "read_only": 1
+  },
+  {
+   "fieldname": "packing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Packing Details"
+  },
+  {
+   "fieldname": "process_order_packing",
+   "fieldtype": "Table",
+   "label": "Process Order Packing",
+   "options": "Process Order Packing"
   }
  ],
  "is_submittable": 1,
- "modified": "2019-10-29 14:08:08.813280",
+ "modified": "2019-12-12 13:59:57.234430",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",

@@ -5,7 +5,10 @@
  "engine": "InnoDB",
  "field_order": [
   "item",
+  "type_of_material",
   "item_name",
+  "pni_packing",
+  "weight",
   "quantity"
  ],
  "fields": [
@@ -29,10 +32,31 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Quantity"
+  },
+  {
+   "default": "Other",
+   "fetch_from": "item.pni_material_type",
+   "fieldname": "type_of_material",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type of Material",
+   "options": "Paper Cup\nBlank\nBottom\nScrap\nOther"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Weight"
+  },
+  {
+   "fieldname": "pni_packing",
+   "fieldtype": "Link",
+   "label": "PNI Packing",
+   "options": "PNI Packing"
   }
  ],
  "istable": 1,
- "modified": "2019-11-02 14:52:09.119578",
+ "modified": "2019-12-12 15:54:16.680480",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order Item",
