@@ -41,6 +41,9 @@ class ProcessOrder(Document):
 			{0} exists").format(stock_entry[0][0]))
 		frappe.db.set(self, 'status', 'Cancelled')
 
+	def get_material_consumption(self):
+		pass
+	
 	def get_process_details(self):
 		#	Set costing_method
 		self.costing_method = frappe.db.get_value("Process Definition", self.process_name, "costing_method")
