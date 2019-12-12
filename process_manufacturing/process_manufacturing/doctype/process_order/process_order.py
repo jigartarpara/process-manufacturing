@@ -9,6 +9,21 @@ from frappe.utils import get_datetime, time_diff_in_hours
 from frappe import _
 
 class ProcessOrder(Document):
+	def validate(self):
+		self.calculate_finished_good_from_packing()
+	
+	def calculate_finished_good_from_packing(self):
+		for good in self.finished_products:
+			if self.process_order_packing:
+				good.quantity = 0
+				good.gross_weight = 0
+				good.net_weight = 0
+				for item in self.process_order_packing:
+					if item.item == good.item:
+						good.quantity = float(item.total) + ( float(good.quantity) if good.quantity else 0)
+						good.gross_weight = float(item.gross_weight) + ( float(good.gross_weight) if good.gross_weight else 0)
+						good.net_weight = float(item.net_weight) + ( float(good.net_weight) if good.net_weight else 0)
+
 	def on_submit(self):
 		if not self.wip_warehouse:
 			frappe.throw(_("Work-in-Progress Warehouse is required before Submit"))

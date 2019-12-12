@@ -20,6 +20,8 @@
   "status",
   "workstation",
   "costing_method",
+  "posting_date",
+  "posting_time",
   "amended_from",
   "warehouses",
   "src_warehouse",
@@ -28,6 +30,7 @@
   "fg_warehouse",
   "scrap_warehouse",
   "sb_materials",
+  "get_material_consumption",
   "materials",
   "packing_details_section",
   "process_order_packing",
@@ -267,10 +270,29 @@
    "fieldtype": "Table",
    "label": "Process Order Packing",
    "options": "Process Order Packing"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_time",
+   "fieldtype": "Time",
+   "label": "Posting Time ",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.material_ratio",
+   "fieldname": "get_material_consumption",
+   "fieldtype": "Button",
+   "label": "Get Material Consumption"
   }
  ],
  "is_submittable": 1,
- "modified": "2019-12-12 13:59:57.234430",
+ "modified": "2019-12-12 17:09:10.818024",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",

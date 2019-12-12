@@ -8,7 +8,8 @@
   "type_of_material",
   "item_name",
   "pni_packing",
-  "weight",
+  "gross_weight",
+  "net_weight",
   "quantity"
  ],
  "fields": [
@@ -23,7 +24,6 @@
   {
    "fieldname": "item_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Item Name",
    "options": "item.item_name"
   },
@@ -43,20 +43,26 @@
    "options": "Paper Cup\nBlank\nBottom\nScrap\nOther"
   },
   {
-   "fieldname": "weight",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Weight"
-  },
-  {
    "fieldname": "pni_packing",
    "fieldtype": "Link",
    "label": "PNI Packing",
    "options": "PNI Packing"
+  },
+  {
+   "fieldname": "gross_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Gross Weight"
+  },
+  {
+   "fieldname": "net_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Net Weight"
   }
  ],
  "istable": 1,
- "modified": "2019-12-12 15:54:16.680480",
+ "modified": "2019-12-12 16:05:14.496788",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order Item",
