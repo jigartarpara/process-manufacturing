@@ -55,7 +55,7 @@ frappe.ui.form.on('Process Order', {
 				}
 			});
 		}
-	}
+	},
 	department: function(frm){
 		if(frm.doc.department){
 			frappe.call({
