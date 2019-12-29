@@ -221,10 +221,10 @@ class ProcessOrder(Document):
 		stock_entry = frappe.new_doc("Stock Entry")
 		stock_entry.process_order = self.name
 		if status == "Submitted":
-			stock_entry.purpose = "Material Transfer for Manufacture"
+			stock_entry.stock_entry_type = "Material Transfer for Manufacture"
 			stock_entry = self.set_se_items_start(stock_entry)
 		if status == "In Process":
-			stock_entry.purpose = "Manufacture"
+			stock_entry.stock_entry_type = "Manufacture"
 			stock_entry = self.set_se_items_finish(stock_entry)
 
 		return stock_entry.as_dict()
