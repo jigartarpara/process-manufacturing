@@ -11,7 +11,19 @@ from frappe import _
 class ProcessOrder(Document):
 	def validate(self):
 		self.calculate_finished_good_from_packing()
+		self.calculate_finish_and_scrap_weight()
 	
+	def calculate_finish_and_scrap_weight(self):
+		finished_products_weight = 0
+		for good in self.finished_products:
+			finished_products_weight += good.net_weight
+		self.total_finish_net_weight = finished_products_weight
+
+		scrap_weight = 0
+		for scrap in self.scrap:
+			scrap_weight += scrap.quantity
+		self.total_scrap_net_weight = scrap_weight
+
 	def calculate_finished_good_from_packing(self):
 		for good in self.finished_products:
 			if self.process_order_packing:
@@ -42,7 +54,15 @@ class ProcessOrder(Document):
 		frappe.db.set(self, 'status', 'Cancelled')
 
 	def get_material_consumption(self):
-		pass
+		blank = float(self.blank) / 100
+		bottom = float( (self.bottom + self.scrap_ratio) ) / 100 
+		print(blank)
+		print(bottom)
+		for raw_good in self.materials:
+			raw_good.quantity = float( (self.total_finish_net_weight + self.total_scrap_net_weight) * (blank if raw_good.type_of_material == "Blank" else bottom) )
+			print(raw_good.type_of_material)
+			print(raw_good.quantity)
+		self.save()
 	
 	def get_process_details(self):
 		#	Set costing_method

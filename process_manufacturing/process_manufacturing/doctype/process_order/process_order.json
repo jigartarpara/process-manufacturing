@@ -36,8 +36,10 @@
   "process_order_packing",
   "sb_finished_products",
   "finished_products",
+  "total_finish_net_weight",
   "sb_scrap",
   "scrap",
+  "total_scrap_net_weight",
   "time",
   "start_dt",
   "employee",
@@ -289,10 +291,22 @@
    "fieldname": "get_material_consumption",
    "fieldtype": "Button",
    "label": "Get Material Consumption"
+  },
+  {
+   "fieldname": "total_finish_net_weight",
+   "fieldtype": "Float",
+   "label": "Total Finish Net Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_scrap_net_weight",
+   "fieldtype": "Float",
+   "label": "Total Scrap Net Weight",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2019-12-12 17:09:10.818024",
+ "modified": "2019-12-29 18:14:26.123404",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",
