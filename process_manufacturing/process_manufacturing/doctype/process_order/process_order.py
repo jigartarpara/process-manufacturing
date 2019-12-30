@@ -12,7 +12,11 @@ class ProcessOrder(Document):
 	def validate(self):
 		self.calculate_finished_good_from_packing()
 		self.calculate_finish_and_scrap_weight()
+		self.update_reel()
 	
+	def update_reel(self):
+		if self.pni_reel:
+			pass
 	def calculate_finish_and_scrap_weight(self):
 		finished_products_weight = 0
 		for good in self.finished_products:

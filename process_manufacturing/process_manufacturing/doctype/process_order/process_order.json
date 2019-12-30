@@ -12,6 +12,7 @@
   "department",
   "process_type",
   "process_name",
+  "pni_reel",
   "material_ratio",
   "blank",
   "bottom",
@@ -74,7 +75,8 @@
    "fieldtype": "Link",
    "in_global_search": 1,
    "label": "Process Type",
-   "options": "Process Type"
+   "options": "Process Type",
+   "reqd": 1
   },
   {
    "fieldname": "process_name",
@@ -236,12 +238,14 @@
    "options": "Employee"
   },
   {
+   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fieldname": "material_ratio",
    "fieldtype": "Link",
    "label": "Material Ratio",
    "options": "Material Ratio"
   },
   {
+   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fetch_from": "material_ratio.blank",
    "fieldname": "blank",
    "fieldtype": "Float",
@@ -249,6 +253,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fetch_from": "material_ratio.bottom",
    "fieldname": "bottom",
    "fieldtype": "Float",
@@ -256,6 +261,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fetch_from": "material_ratio.scrap",
    "fieldname": "scrap_ratio",
    "fieldtype": "Float",
@@ -263,6 +269,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fieldname": "packing_details_section",
    "fieldtype": "Section Break",
    "label": "Packing Details"
@@ -287,7 +294,7 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval: doc.material_ratio",
+   "depends_on": "eval: doc.material_ratio && doc.process_type == \"Paper Cup Making\"",
    "fieldname": "get_material_consumption",
    "fieldtype": "Button",
    "label": "Get Material Consumption"
@@ -303,10 +310,17 @@
    "fieldtype": "Float",
    "label": "Total Scrap Net Weight",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.process_type != \"Paper Cup Making\"",
+   "fieldname": "pni_reel",
+   "fieldtype": "Link",
+   "label": "PNI Reel",
+   "options": "PNI Reel"
   }
  ],
  "is_submittable": 1,
- "modified": "2019-12-29 18:14:26.123404",
+ "modified": "2019-12-30 09:06:31.456715",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",
