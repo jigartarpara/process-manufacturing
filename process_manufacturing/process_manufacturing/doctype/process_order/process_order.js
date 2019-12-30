@@ -97,9 +97,9 @@ var prompt_for_qty = function (frm, table, title, qty_required, callback) {
 	$.each(frm.doc[table] || [], function(i, row) {
 		fields.push({
 			fieldtype: "Float",
-			label: __("{0} - {1}", [row.item, row.item_name]),
-			fieldname: row.name
-			//value: row.quantity //value is ignored
+			label: __("{0}", [row.item,]),
+			fieldname: row.name,
+			default: row.quantity //value is ignored
 		});
 	})
 	frappe.prompt(
