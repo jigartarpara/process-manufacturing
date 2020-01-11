@@ -118,7 +118,8 @@ var prompt_for_qty = function (frm, table, title, qty_required, callback) {
 			fieldtype: "Float",
 			label: __("{0}", [row.item,]),
 			fieldname: row.name,
-			default: row.quantity //value is ignored
+			default: row.quantity, //value is ignored
+			read_only: true
 		});
 	})
 	frappe.prompt(
