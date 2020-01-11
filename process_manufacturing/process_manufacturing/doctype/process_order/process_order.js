@@ -48,10 +48,7 @@ frappe.ui.form.on('Process Order', {
 				doc: frm.doc,
 				method: "get_material_consumption",
 				callback: function(r) {
-					// refresh_field("costing_method");
-					// refresh_field("finished_products");
-					// refresh_field("scrap");
-					// refresh_field("materials");
+					frm.reload_doc()
 				}
 			});
 		}
