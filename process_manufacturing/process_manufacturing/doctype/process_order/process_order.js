@@ -13,6 +13,12 @@ frappe.ui.form.on('Process Order', {
 				filters: {"department": frm.doc.department, "process_type": frm.doc.process_type}
 			}
 		});
+		
+		frm.set_query("pni_packing", "process_order_packing", function () {
+			return {
+				filters: {"date": frm.doc.filter_date, "workstation": frm.doc.workstation, "item": frm.doc.filter_item}
+			}
+		});
 	},
 	refresh: function(frm){
 		if(!frm.doc.__islocal && frm.doc.status == 'Submitted'){
@@ -86,6 +92,22 @@ frappe.ui.form.on('Process Order', {
 	}
 });
 
+frappe.ui.form.on('Process Order Packing', {
+	onload: function () {
+		// pni_packing
+		var me = this;
+		debugger;
+        me.frm.set_query("pni_packing", "process_order_packing", function (doc, cdt, cdn) {
+			console.log(cur_frm);
+			debugger;
+            return {
+                filters: {
+                    kind: "Child"
+                }
+            };
+        });
+	}
+})
 var prompt_for_qty = function (frm, table, title, qty_required, callback) {
 	// if(table && !qty_required){
 	// 	callback();

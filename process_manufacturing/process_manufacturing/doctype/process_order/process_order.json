@@ -22,6 +22,8 @@
   "costing_method",
   "posting_date",
   "posting_time",
+  "filter_date",
+  "filter_item",
   "amended_from",
   "warehouses",
   "src_warehouse",
@@ -308,10 +310,21 @@
    "fieldtype": "Link",
    "label": "PNI Reel",
    "options": "PNI Reel"
+  },
+  {
+   "fieldname": "filter_date",
+   "fieldtype": "Date",
+   "label": "Filter Date"
+  },
+  {
+   "fieldname": "filter_item",
+   "fieldtype": "Link",
+   "label": "Filter Item",
+   "options": "Item"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-01-11 08:56:28.480933",
+ "modified": "2020-01-11 09:11:35.946741",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",
