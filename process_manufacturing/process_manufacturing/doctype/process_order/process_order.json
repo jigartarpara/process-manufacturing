@@ -16,7 +16,6 @@
   "material_ratio",
   "blank",
   "bottom",
-  "scrap_ratio",
   "column_break_5",
   "status",
   "workstation",
@@ -262,14 +261,6 @@
   },
   {
    "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
-   "fetch_from": "material_ratio.scrap",
-   "fieldname": "scrap_ratio",
-   "fieldtype": "Float",
-   "label": "Scrap Ratio",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval: doc.process_type == \"Paper Cup Making\"",
    "fieldname": "packing_details_section",
    "fieldtype": "Section Break",
    "label": "Packing Details"
@@ -320,7 +311,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-01-10 19:32:54.783000",
+ "modified": "2020-01-11 08:56:28.480933",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",

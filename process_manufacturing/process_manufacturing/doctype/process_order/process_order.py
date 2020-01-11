@@ -59,7 +59,7 @@ class ProcessOrder(Document):
 
 	def get_material_consumption(self):
 		blank = float(self.blank) / 100
-		bottom = float( (self.bottom + self.scrap_ratio) ) / 100 
+		bottom = float( self.bottom  ) / 100 
 		for raw_good in self.materials:
 			raw_good.quantity = float( 
 									(
