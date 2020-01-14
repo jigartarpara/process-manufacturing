@@ -15,8 +15,8 @@ class ProcessOrder(Document):
 		self.update_reel()
 	
 	def update_reel(self):
-		if self.pni_reel:
-			pass
+		pass
+	
 	def calculate_finish_and_scrap_weight(self):
 		finished_products_weight = 0
 		for good in self.finished_products:
