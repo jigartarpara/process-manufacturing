@@ -202,8 +202,7 @@
    "allow_on_submit": 1,
    "fieldname": "start_dt",
    "fieldtype": "Datetime",
-   "label": "Start Date Time",
-   "read_only": 1
+   "label": "Start Date Time"
   },
   {
    "fieldname": "column_break_24",
@@ -213,8 +212,7 @@
    "allow_on_submit": 1,
    "fieldname": "end_dt",
    "fieldtype": "Datetime",
-   "label": "End Date Time",
-   "read_only": 1
+   "label": "End Date Time"
   },
   {
    "fieldname": "company",
@@ -316,7 +314,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-01-14 21:25:46.573074",
+ "modified": "2020-02-13 18:26:17.002960",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",

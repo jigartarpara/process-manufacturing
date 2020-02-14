@@ -114,21 +114,21 @@ class ProcessOrder(Document):
 		se.from_warehouse = self.wip_warehouse
 		se.to_warehouse = self.fg_warehouse
 
-		se_materials = frappe.get_doc("Stock Entry",{"process_order": self.name, "docstatus": '1'})
+		# se_materials = frappe.get_doc("Stock Entry",{"process_order": self.name, "docstatus": '1'})
 		#get items to consume from previous stock entry or append to items
 		#TODO allow multiple raw material transfer
 		raw_material_cost = 0
 		operating_cost = 0
-		if se_materials:
-			raw_material_cost = se_materials.total_incoming_value
-			se.items = se_materials.items
-			for item in se.items:
-				item.s_warehouse = se.from_warehouse
-				item.t_warehouse = None
-		else:
-			for item in self.materials:
-				se = self.set_se_items(se, item, se.from_warehouse, None, False)
-				#TODO calc raw_material_cost
+		# if se_materials:
+		# 	raw_material_cost = se_materials.total_incoming_value
+		# 	se.items = se_materials.items
+		# 	for item in se.items:
+		# 		item.s_warehouse = se.from_warehouse
+		# 		item.t_warehouse = None
+		# else:
+		for item in self.materials:
+			se = self.set_se_items(se, item, se.from_warehouse, None, False)
+		#TODO calc raw_material_cost
 
 		#no timesheet entries, calculate operating cost based on workstation hourly rate and process start, end
 		hourly_rate = frappe.db.get_value("Workstation", self.workstation, "hour_rate")
@@ -268,7 +268,7 @@ def manage_se_submit(se, po):
 	if po.status == "Submitted":
 		po.status = "In Process"
 		po.start_dt = get_datetime()
-	elif po.status == "In Process":
+	if po.status == "In Process":
 		po.status = "Completed"
 	elif po.status in ["Completed", "Cancelled"]:
 		frappe.throw("You cannot make entries against Completed/Cancelled Process Orders")
@@ -300,13 +300,15 @@ def manage_se_changes(doc, method):
 	if doc.process_order:
 		po = frappe.get_doc("Process Order", doc.process_order)
 		if(method=="on_submit"):
-			if po.status == "Submitted":
-				validate_items(doc.items, po.materials)
-			elif po.status == "In Process":
-				po_items = po.materials
-				po_items.extend(po.finished_products)
-				po_items.extend(po.scrap)
-				validate_items(doc.items, po_items)
+			# if po.status == "Submitted":
+			# 	validate_items(doc.items, po.materials)
+			# elif po.status == "In Process":
+			
+			po_items = po.materials
+			po_items.extend(po.finished_products)
+			po_items.extend(po.scrap)
+			validate_items(doc.items, po_items)
+			
 			validate_se_qty(doc, po)
 			manage_se_submit(doc, po)
 		elif(method=="on_cancel"):
