@@ -59,16 +59,15 @@ frappe.ui.form.on('Process Order', {
 			});
 		}
 	},
-	department: function(frm){
-		if(frm.doc.department){
+	workstation: function(frm){
+		if(frm.doc.workstation){
 			frappe.call({
 				"method": "frappe.client.get",
 				args: {
-					doctype: "Manufacturing Department",
-					name: frm.doc.department
+					doctype: "Workstation",
+					name: frm.doc.workstation
 				},
 				callback: function (data) {
-					frappe.model.set_value(frm.doctype,frm.docname, "wip_warehouse", data.message.wip_warehouse);
 					frappe.model.set_value(frm.doctype,frm.docname, "fg_warehouse", data.message.fg_warehouse);
 					frappe.model.set_value(frm.doctype,frm.docname, "scrap_warehouse", data.message.scrap_warehouse);
 					frappe.model.set_value(frm.doctype,frm.docname, "src_warehouse", data.message.src_warehouse);

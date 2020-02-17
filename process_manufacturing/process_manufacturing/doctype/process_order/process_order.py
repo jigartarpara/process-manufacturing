@@ -12,10 +12,6 @@ class ProcessOrder(Document):
 	def validate(self):
 		self.calculate_finished_good_from_packing()
 		self.calculate_finish_and_scrap_weight()
-		self.update_reel()
-	
-	def update_reel(self):
-		pass
 	
 	def calculate_finish_and_scrap_weight(self):
 		finished_products_weight = 0
@@ -41,8 +37,6 @@ class ProcessOrder(Document):
 						good.net_weight = float(item.net_weight) + ( float(good.net_weight) if good.net_weight else 0)
 
 	def on_submit(self):
-		if not self.wip_warehouse:
-			frappe.throw(_("Work-in-Progress Warehouse is required before Submit"))
 		if not self.fg_warehouse:
 			frappe.throw(_("Target Warehouse is required before Submit"))
 		if self.scrap and not self.scrap_warehouse:
@@ -94,38 +88,16 @@ class ProcessOrder(Document):
 		self.save()
 		return self.make_stock_entry(status)
 
-	def set_se_items_start(self, se):
-		#set source and target warehouse
-		se.from_warehouse = self.src_warehouse
-		se.to_warehouse = self.wip_warehouse
-		for item in self.materials:
-			if self.src_warehouse:
-				src_wh = self.src_warehouse
-			else:
-				src_wh = frappe.db.get_value("Item Default", {'parent': item.item, 'company': self.company},\
-					["default_warehouse"])
-			#create stock entry lines
-			se = self.set_se_items(se, item, src_wh, self.wip_warehouse, False)
-
-		return se
-
 	def set_se_items_finish(self, se):
 		#set from and to warehouse
-		se.from_warehouse = self.wip_warehouse
+		se.from_warehouse = self.src_warehouse
 		se.to_warehouse = self.fg_warehouse
 
-		# se_materials = frappe.get_doc("Stock Entry",{"process_order": self.name, "docstatus": '1'})
 		#get items to consume from previous stock entry or append to items
 		#TODO allow multiple raw material transfer
 		raw_material_cost = 0
 		operating_cost = 0
-		# if se_materials:
-		# 	raw_material_cost = se_materials.total_incoming_value
-		# 	se.items = se_materials.items
-		# 	for item in se.items:
-		# 		item.s_warehouse = se.from_warehouse
-		# 		item.t_warehouse = None
-		# else:
+
 		for item in self.materials:
 			se = self.set_se_items(se, item, se.from_warehouse, None, False)
 		#TODO calc raw_material_cost
@@ -229,9 +201,9 @@ class ProcessOrder(Document):
 	def make_stock_entry(self, status):
 		stock_entry = frappe.new_doc("Stock Entry")
 		stock_entry.process_order = self.name
-		if status == "Submitted":
-			stock_entry.stock_entry_type = "Material Transfer for Manufacture"
-			stock_entry = self.set_se_items_start(stock_entry)
+		# if status == "Submitted":
+		# 	stock_entry.stock_entry_type = "Material Transfer for Manufacture"
+		# 	stock_entry = self.set_se_items_start(stock_entry)
 		if status == "In Process":
 			stock_entry.stock_entry_type = "Manufacture"
 			stock_entry = self.set_se_items_finish(stock_entry)

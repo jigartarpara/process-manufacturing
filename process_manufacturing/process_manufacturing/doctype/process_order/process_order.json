@@ -9,7 +9,6 @@
  "field_order": [
   "section_break_1",
   "naming_series",
-  "department",
   "process_type",
   "process_name",
   "material_ratio",
@@ -26,7 +25,6 @@
   "amended_from",
   "warehouses",
   "src_warehouse",
-  "wip_warehouse",
   "column_break_12",
   "fg_warehouse",
   "scrap_warehouse",
@@ -61,14 +59,6 @@
    "label": "Series",
    "options": "PO-",
    "print_hide": 1
-  },
-  {
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "in_standard_filter": 1,
-   "label": "Department",
-   "options": "Manufacturing Department",
-   "reqd": 1
   },
   {
    "fieldname": "process_type",
@@ -136,12 +126,6 @@
    "fieldname": "src_warehouse",
    "fieldtype": "Link",
    "label": "Source Warehouse",
-   "options": "Warehouse"
-  },
-  {
-   "fieldname": "wip_warehouse",
-   "fieldtype": "Link",
-   "label": "Work-in-Progress Warehouse",
    "options": "Warehouse"
   },
   {
@@ -314,7 +298,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-02-13 18:26:17.002960",
+ "modified": "2020-02-17 09:55:54.874433",
  "modified_by": "Administrator",
  "module": "Process Manufacturing",
  "name": "Process Order",
