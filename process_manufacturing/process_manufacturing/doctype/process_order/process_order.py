@@ -41,6 +41,12 @@ class ProcessOrder(Document):
 			frappe.throw(_("Target Warehouse is required before Submit"))
 		if self.scrap and not self.scrap_warehouse:
 			frappe.throw(_("Scrap Warehouse is required before submit"))
+		for item in self.materials:
+			if item.quantity == 0:
+				frappe.throw(_("Raw Material can't be zero for item {0}".format(item.item)))
+		for item in self.finished_products:
+			if item.quantity == 0:
+				frappe.throw(_("Raw Material can't be zero for item {0}".format(item.item)))
 		frappe.db.set(self, 'status', 'Submitted')
 
 	def on_cancel(self):
@@ -201,9 +207,7 @@ class ProcessOrder(Document):
 	def make_stock_entry(self, status):
 		stock_entry = frappe.new_doc("Stock Entry")
 		stock_entry.process_order = self.name
-		# if status == "Submitted":
-		# 	stock_entry.stock_entry_type = "Material Transfer for Manufacture"
-		# 	stock_entry = self.set_se_items_start(stock_entry)
+
 		if status == "In Process":
 			stock_entry.stock_entry_type = "Manufacture"
 			stock_entry = self.set_se_items_finish(stock_entry)
@@ -263,22 +267,19 @@ def manage_se_cancel(se, po):
 
 def validate_se_qty(se, po):
 	validate_material_qty(se.items, po.materials)
-	if po.status == "In Process":
-		validate_material_qty(se.items, po.finished_products)
-		validate_material_qty(se.items, po.scrap)
+	validate_material_qty(se.items, po.finished_products)
+	validate_material_qty(se.items, po.scrap)
 
 @frappe.whitelist()
 def manage_se_changes(doc, method):
 	if doc.process_order:
 		po = frappe.get_doc("Process Order", doc.process_order)
 		if(method=="on_submit"):
-			# if po.status == "Submitted":
-			# 	validate_items(doc.items, po.materials)
-			# elif po.status == "In Process":
 			
 			po_items = po.materials
 			po_items.extend(po.finished_products)
 			po_items.extend(po.scrap)
+			
 			validate_items(doc.items, po_items)
 			
 			validate_se_qty(doc, po)

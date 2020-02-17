@@ -42,6 +42,10 @@ frappe.ui.form.on('Process Order', {
 			});
 			finish_btn.addClass('btn-primary')
 		}
+		if(frm.doc.status == "Completed") {
+			cur_frm.set_df_property("start_dt", "read_only", true);
+			cur_frm.set_df_property("end_dt", "read_only", true);
+		}
 	},
 	get_material_consumption: function(frm) {
 		if(frm.doc.process_name){
