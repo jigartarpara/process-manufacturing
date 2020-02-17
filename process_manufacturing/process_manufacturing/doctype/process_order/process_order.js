@@ -5,12 +5,7 @@ frappe.ui.form.on('Process Order', {
 	setup: function (frm) {
 		frm.set_query("workstation", function () {
 			return {
-				filters: {"department": frm.doc.department}
-			}
-		});
-		frm.set_query("process_name", function () {
-			return {
-				filters: {"department": frm.doc.department, "process_type": frm.doc.process_type}
+				filters: {"papercup_forming_machine": true}
 			}
 		});
 		
@@ -93,12 +88,8 @@ frappe.ui.form.on('Process Order', {
 
 frappe.ui.form.on('Process Order Packing', {
 	onload: function () {
-		// pni_packing
 		var me = this;
-		debugger;
         me.frm.set_query("pni_packing", "process_order_packing", function (doc, cdt, cdn) {
-			console.log(cur_frm);
-			debugger;
             return {
                 filters: {
                     kind: "Child"
@@ -108,16 +99,14 @@ frappe.ui.form.on('Process Order Packing', {
 	}
 })
 var prompt_for_qty = function (frm, table, title, qty_required, callback) {
-	// if(table && !qty_required){
-	// 	callback();
-	// }
+	
 	let fields = []
 	$.each(frm.doc[table] || [], function(i, row) {
 		fields.push({
 			fieldtype: "Float",
 			label: __("{0}", [row.item,]),
 			fieldname: row.name,
-			default: row.quantity, //value is ignored
+			default: row.quantity, 
 			read_only: true
 		});
 	})
